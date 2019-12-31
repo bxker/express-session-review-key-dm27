@@ -1,26 +1,48 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import Axios from 'axios'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component{
+  constructor(){
+    super()
+    this.state = {
+      user: {},
+      username: '',
+      password: ''
+    }
+  }
+
+  // componentDidMount(){
+  //   Axios.get('/auth/user').then(response => {
+  //     this.setState({
+  //       user: response.data
+  //     })
+  //   })
+  // }
+
+  handleInputChange = e => {
+    this.setState({[e.target.name]: e.target.value})
+  }
+
+  login = () => {
+    Axios.post('/auth/login', {username: this.state.username, password: this.state.password}).then(response => {
+      this.setState({
+        user: response.data
+      })
+    })
+  }
+  
+  render(){
+    console.log(this.state.user)
+    return (
+      <div className="App">
+        <input onChange={this.handleInputChange} name="username" placeholder="username"></input>
+        <input onChange={this.handleInputChange} name="password" placeholder="password"></input>
+        <button onClick={this.login}>Login</button>
+    {this.state.user.username ? <h1>Welcome, {this.state.user.username}</h1>: null}
+      </div>
+    );
+  }
 }
 
 export default App;
