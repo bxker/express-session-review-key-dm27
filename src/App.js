@@ -39,7 +39,9 @@ class App extends React.Component{
         <input onChange={this.handleInputChange} name="username" placeholder="username"></input>
         <input onChange={this.handleInputChange} name="password" placeholder="password"></input>
         <button onClick={this.login}>Login</button>
-    {this.state.user.username ? <h1>Welcome, {this.state.user.username}</h1>: null}
+        
+        {this.state.user.username ? <h1>Welcome, {this.state.user.username}</h1>: null}
+        
       </div>
     );
   }
